@@ -45,6 +45,11 @@ def update():
         new_visited = request.json["last_visited"] + result
         print(new_visited)
 
+@app.route("/test", methods=["POST"])
+def test():
+    if request.method == "POST":
+        return request.json["hello"]
+    return "pong"
 # ----------------------------------- END OF ROUTES --------------------------------------------
 
 if __name__ == "__main__":
