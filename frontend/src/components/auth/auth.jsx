@@ -1,8 +1,10 @@
 import axios from "axios";
 import "./auth.module.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../../App";
 
 const Auth = () => {
+    const user = useContext(UserContext);
     const [error, setError] = useState("")
     const [type, setType] = useState(true);
     const [username, setUsername] = useState("");
@@ -16,18 +18,18 @@ const Auth = () => {
           password: password
         }).then((response) => {
           if (response) {
-            
+            user.setUser(response.data)
           } else {
             setError("Username or password incorrect")
           }
-        })
+        }).then(user.generatePrompt())
       } else {
         axios.post("http://localhost:5000/signup", {
           username: username,
           password: password
         }).then((response) => {
           if (response) {
-
+            console.log(response)
           } else {
             setError("Account already exists")
           }
