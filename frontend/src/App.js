@@ -1,23 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import TicketBox from './components/TicketBox';
+import franceImage from './images/France.jpg';
+import japanImage from './images/Japan.jpg';
+import taiwanImage from './images/Taiwan.jpg';
+import axios from 'axios';
 
 function App() {
+  const amount = 0;
+  const countryName = "France";
+  const imageName = countryName === "Japan"? japanImage: countryName === "France"? franceImage: taiwanImage;
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TicketBox amount={amount} countryName={countryName} image= {imageName}/>
     </div>
   );
 }

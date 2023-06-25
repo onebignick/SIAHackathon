@@ -45,10 +45,11 @@ def update():
         new_visited = request.json["last_visited"] + result
         print(new_visited)
 
-@app.route("/test", methods=["POST"])
+@app.route("/test", methods=["POST", "GET"])
 def test():
     if request.method == "POST":
-        return request.json["hello"]
+        res = [request.json["hello"], request.json["another"]]
+        return res
     return "pong"
 # ----------------------------------- END OF ROUTES --------------------------------------------
 
