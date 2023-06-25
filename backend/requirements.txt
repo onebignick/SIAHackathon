@@ -2,7 +2,4 @@ simple_salesforce
 openai
 flask
 flask_cors
-Flask-Login
-pyOpenSSL
-requests
-oauthlib
+python-dotenv
