@@ -2,10 +2,11 @@ from flask import Flask, request
 from flask_cors import CORS
 from simple_salesforce import Salesforce
 import openai
+import os
 # ----------------------------------- END OF IMPORTS --------------------------------------------\
 
 app = Flask(__name__)
-openai.api_key = "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"
+openai.api_key = os.getenv("API_KEY")
 CORS(app)
 sf = Salesforce(username="qwertyuiopasdfgh@gmail.com", password="passwORD111?", security_token="7GWalhKTXQ2Mqemi5722tsf7")
 # ----------------------------------- END OF MIDDLEWARE --------------------------------------------
