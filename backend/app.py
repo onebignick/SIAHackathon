@@ -1,14 +1,5 @@
 from flask import Flask, request
-from flask_login import (
-    login_manager,
-    current_user,
-    login_required,
-    login_user,
-    logout_user,
-)
 from flask_cors import CORS
-from oauthlib.oauth2 import WebApplicationClient
-import requests
 from simple_salesforce import Salesforce
 # ----------------------------------- END OF IMPORTS --------------------------------------------\
 
@@ -20,22 +11,23 @@ sf = Salesforce(username="qwertyuiopasdfgh@gmail.com", password="passwORD111?", 
 @app.route('/signup', methods=['POST'])
 def signup():
     if request.method == "POST":
-        result = sf.SIA_Account__c.create({
-            "username": request.json["username"],
-            "password": request.json["password"],
-        })
-        return result
-    
+        result = sf.query(f"SELECT Name, username__c FROM SIA_Account__c WHERE username__c='{request.json['username']}'")
+        if len(result) == 0:
+            sf.SIA_Account__c.create({
+                "username__c": request.json["username"],
+                "password__c": request.json["password"],
+            })
+            return True
+        return False
+
 
 @app.route("/login", methods=["POST"])
 def login():
     if request.method == "POST":
-        result = sf.query(f"SELECT password FROM SIA_ACCOUNT WHERE username={request.json['username']}")
-        if result != request.json["password"]:
-            return False
-        else:
-            return True
-    return False
+        result = sf.query(f"SELECT Name, username__c, password__c FROM SIA_Account__c WHERE username__c='{request.json['username']}'")
+        if len(result) != 0 and request.json["password"] == result["records"][0]["password__c"]:
+            return result['records'][0]['Name']
+        return False
     
 
 @app.route("/updateContact", methods=["POST"])
@@ -44,6 +36,7 @@ def update():
         result = sf.query(f"SELECT last_visited FROM SIA_ACCOUNT WHERE username={request.json['username']}")
         new_visited = request.json["last_visited"] + result
         print(new_visited)
+
 
 @app.route("/test", methods=["POST", "GET"])
 def test():

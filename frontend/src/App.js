@@ -5,6 +5,7 @@ import franceImage from './images/France.jpg';
 import japanImage from './images/Japan.jpg';
 import taiwanImage from './images/Taiwan.jpg';
 import axios from 'axios';
+import Auth from './components/auth/auth';
 
 function App() {
   const amount = 0;
@@ -13,6 +14,7 @@ function App() {
   return (
     <div className="App">
       <TicketBox amount={amount} countryName={countryName} image= {imageName}/>
+      <Auth></Auth>
     </div>
   );
 }
