@@ -35,6 +35,9 @@ const Auth = () => {
           }
         })
       }
+
+      setUsername("")
+      setPassword("")
     }
 
     return (

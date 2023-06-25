@@ -15,7 +15,8 @@ sf = Salesforce(username="qwertyuiopasdfgh@gmail.com", password="passwORD111?", 
 def signup():
     if request.method == "POST":
         result = sf.query(f"SELECT Name, username__c FROM SIA_Account__c WHERE username__c='{request.json['username']}'")
-        if len(result) == 0:
+        print(result['records'])
+        if len(result['records']) == 0:
             sf.SIA_Account__c.create({
                 "username__c": request.json["username"],
                 "password__c": request.json["password"],
